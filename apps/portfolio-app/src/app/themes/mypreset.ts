@@ -1,0 +1,44 @@
+import { definePreset } from '@primeng/themes';
+import Aura from '@primeng/themes/aura';
+import { ButtonDesignTokens } from '@primeng/themes/types/button';
+
+const MyPreset = definePreset(Aura, {
+  components: {
+    button: {
+      colorScheme: {
+        light: {
+          text: {
+            primary: {
+              hoverBackground:
+                'color-mix(in srgb, {primary.500}, transparent 80%)',
+              activeBackground:
+                'color-mix(in srgb, {primary.500}, transparent 60%)',
+            },
+          },
+          outlined: {
+            secondary: {
+              borderColor: '{primary.700}',
+            },
+          },
+        },
+      },
+    } as ButtonDesignTokens,
+  },
+  semantic: {
+    primary: {
+      50: '{indigo.50}',
+      100: '{indigo.100}',
+      200: '{indigo.200}',
+      300: '{indigo.300}',
+      400: '{indigo.400}',
+      500: '{indigo.500}',
+      600: '{indigo.600}',
+      700: '{indigo.700}',
+      800: '{indigo.800}',
+      900: '{indigo.900}',
+      950: '{indigo.950}'
+    }
+  }
+});
+
+export default MyPreset;

@@ -1,0 +1,18 @@
+.header-wrapper {
+  display: block;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 1rem;
+  background-color: transparent;
+}
+
+:host{
+  font-family: 'Montserrat', serif;
+  font-optical-sizing: auto;
+  font-weight: 350;
+  font-style: normal;
+  font-size: 18px;
+}
