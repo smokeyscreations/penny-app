@@ -1,0 +1,34 @@
+<!-- eslint-disable @angular-eslint/template/elements-content -->
+
+<div class="flex align-items-center justify-content-center h-screen w-screen bg-white">
+
+    <div class="surface-card p-4 shadow-2 border-round w-full md:w-4 lg:w-4">
+        <p>Sign in to your account</p>
+      <div class="text-center mb-5">
+        <span class="text-600 font-medium line-height-3">Don't have an account?</span>
+        <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
+      </div>
+  
+      <div>
+        <p-floatlabel variant="on">
+            <input pInputText id="on_label"autocomplete="off" />
+            <label for="on_label">Email</label>
+        </p-floatlabel>
+  
+        <p-floatlabel variant="on">
+            <p-password [toggleMask]="true" id="pw_label" promptLabel="Choose a password" weakLabel="Too simple" mediumLabel="Average complexity" strongLabel="Complex password"/>
+            <label for="pw_label">Password</label>
+        </p-floatlabel>
+  
+        <div class="flex align-items-center justify-content-between mb-6">
+          <div class="flex align-items-center">
+            <p-checkbox inputId="rememberme" [binary]="true" variant="filled" />
+            <label for="rememberme">Remember me</label>
+          </div>
+          <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
+        </div>
+  
+        <button pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
+      </div>
+    </div>
+  </div>

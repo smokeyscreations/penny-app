@@ -1,0 +1,96 @@
+<!-- eslint-disable @angular-eslint/template/elements-content -->
+<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
+<!-- portfolios.component.html -->
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div class="w-full max-w-3xl bg-white shadow-lg rounded-lg p-8 relative">
+        <h2 class="text-2xl font-bold mb-6 text-center">Create Portfolio</h2>
+
+        <form class="space-y-6">
+            <div class="flex flex-col">
+                <label for="title" class="mb-2 font-semibold">Title*</label>
+                <input id="title" type="text" pInputText formControlName="title" placeholder="Enter portfolio title"
+                    class="p-inputtext p-component border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <div class="text-red-500 text-sm mt-1"> Title is required.</div>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="portfolioSummary" class="mb-2 font-semibold">Summary</label>
+                <textarea id="portfolioSummary" pInputTextarea formControlName="portfolioSummary" rows="3"
+                    placeholder="Enter a brief summary"
+                    class="p-inputtextarea p-component border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+            </div>
+
+            <div formGroupName="dateRange" class="flex flex-col">
+                <label class="mb-2 font-semibold">Date Range*</label>
+                <div class="flex space-x-4">
+                    <div class="flex flex-col w-1/2">
+                        <p-floatlabel variant="on">
+                            <p-datepicker inputId="start_date" showIcon iconDisplay="input" formControlName="start"
+                                class="w-full"></p-datepicker>
+                            <label for="start_date" class="ml-3">Start Date</label>
+                        </p-floatlabel>
+                        <div class="text-red-500 text-sm mt-1">
+                            Start date is required.
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col w-1/2">
+                        <p-floatlabel variant="on">
+                            <p-datepicker inputId="end_date" showIcon iconDisplay="input" formControlName="end"
+                                class="w-full"></p-datepicker>
+                            <label for="end_date" class="ml-3">End Date</label>
+                        </p-floatlabel>
+                        <div class="text-red-500 text-sm mt-1">
+                            End date is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div formArrayName="projects" class="flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold">Projects</h3>
+                    <button type="button" pButton label="Add Project" icon="pi pi-plus"
+                        class="bg-black text-white hover:bg-gray-800 focus:ring-2 focus:ring-indigo-500"></button>
+                </div>
+
+                <div class="border border-gray-300 rounded p-4 mb-4 bg-gray-50 relative">
+                    <h4 class="text-lg font-semibold mb-4">Project</h4>
+                    <div class="flex flex-col mb-4">
+                        <label class="mb-2 font-semibold">Project Name*</label>
+                        <input type="text" pInputText formControlName="projectName" placeholder="Enter project name"
+                            class="p-inputtext p-component border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                        <div class="text-red-500 text-sm mt-1">
+                            Project name is required.
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col mb-4">
+                        <label class="mb-2 font-semibold">Project Type*</label>
+                        <p-cascadeselect optionLabel="name" placeholder="Select Project Type"
+                            class="w-full"></p-cascadeselect>
+                        <div class="text-red-500 text-sm mt-1">
+                            Project type is required.
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col mb-4">
+                        <label class="mb-2 font-semibold">Description</label>
+                        <textarea pInputTextarea formControlName="description" rows="3"
+                            placeholder="Enter project description"
+                            class="p-inputtextarea p-component border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                    </div>
+                    <div class="flex flex-col mb-4">
+                        <label class="mb-2 font-semibold">Images</label>
+                        <p-fileUpload formControlName="images" mode="basic" name="demo[]" accept="image/*"
+                            maxFileSize="1000000" class="w-full"></p-fileUpload>
+                    </div>
+                    <button type="button" pButton label="Remove Project" icon="pi pi-minus"
+                        class="absolute top-4 right-4 bg-red-600 text-white hover:bg-red-700 focus:ring-2 focus:ring-indigo-500"></button>
+                </div>
+            </div>
+        </form>
+        <p-speeddial [model]="items()" direction="up"
+            class="fixed left-1/2 transform -translate-x-1/2 bottom-8"></p-speeddial>
+    </div>
+</div>

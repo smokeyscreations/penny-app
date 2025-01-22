@@ -1,4 +1,11 @@
-
-<p-menubar [model]="menuItems()" [dt]="menuBarTokens">
-    <app-actions></app-actions>
+<!-- eslint-disable @angular-eslint/template/alt-text -->
+<p-menubar class="p-flex p-align-center p-px-4 p-px" [model]="menuItems()" [dt]="menuBarTokens">
+    <ng-template pTemplate="start">
+        <div class="p-d-flex p-align-center">
+            <img src="logo.png" class="h-16 w-auto p-mr-4" />
+        </div>
+    </ng-template>
+    <ng-template pTemplate="end">
+        <app-actions/>
+    </ng-template>
 </p-menubar>

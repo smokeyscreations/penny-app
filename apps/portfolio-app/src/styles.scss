@@ -1,5 +1,7 @@
 @import "primeicons/primeicons.css";
 @layer tailwind-base, primeng, tailwind-utilities;
+@import "~primeflex/primeflex.css";
+
 
 @layer tailwind-base {
 @tailwind base;
@@ -11,5 +13,5 @@
 }
 
 body{
-    background: #293a4e;
+    background: white;
 }

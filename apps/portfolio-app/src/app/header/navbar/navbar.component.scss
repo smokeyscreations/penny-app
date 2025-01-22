@@ -5,3 +5,17 @@
     font-style: normal;
     font-size: 18px;
 }
+
+:host ::ng-deep .p-menubar {
+    justify-content: center; 
+  }
+
+:host ::ng-deep .p-menubar-start {
+    margin-left: 10rem;
+    
+  }
+
+:host ::ng-deep .p-menubar-end {
+    margin-left: 20rem;
+  }
+  

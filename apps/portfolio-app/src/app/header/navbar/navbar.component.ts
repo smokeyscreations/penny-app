@@ -24,16 +24,17 @@ export class NavbarComponent {
   menuItems = signal<MenuItem[]>(initialMenuItems);
   
   menuBarTokens = {
-    background: '#293a4e',
+    background: 'none',
     color: '#000000',
-    'border.color': '#293a4e',
-    'border.radius': '8px',
+    'border.color': 'none',
     padding: '0.5rem',
     'item.color': 'white',
     'item.focus.background': '#f9b205',
     'item.active.background': '#e0e0e0',
-    'item.padding': '0.25rem 0.75rem'
+    'item.padding': '0.25rem 0.75rem',
   };
+
+  
   
 }
 
