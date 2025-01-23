@@ -1,34 +1,42 @@
 <!-- eslint-disable @angular-eslint/template/elements-content -->
 
-<div class="flex align-items-center justify-content-center h-screen w-screen bg-white">
+<div class="flex align-items-start justify-content-center h-[50%] w-auto pt-8 bg-white">
+  <!-- Card Container -->
+  <div class="surface-card p-4 shadow-2 border-round w-full md:w-3 lg:w-3">
+    <div pFocusTrap class="w-full sm:w-80 flex flex-col gap-4">
+      <p>Log in to your account</p>
+      <p-iftalabel>
+        <p-iconfield>
+          <p-inputicon class="pi pi-envelope" />
+          <input placeholder="Enter your email" type="email" pInputText id="email" class="w-[96%]" />
+        </p-iconfield>
+        <label for="username">Email</label>
+      </p-iftalabel>
 
-    <div class="surface-card p-4 shadow-2 border-round w-full md:w-4 lg:w-4">
-        <p>Sign in to your account</p>
-      <div class="text-center mb-5">
-        <span class="text-600 font-medium line-height-3">Don't have an account?</span>
-        <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
+      <p-iftalabel>
+        <p-iconfield>
+          <p-inputicon class="pi pi-key" />
+          <input placeholder="Enter your password" type="password" pInputText id="password" class="w-[96%]" />
+        </p-iconfield>
+        <label for="password">Password</label>
+      </p-iftalabel>
+      <div class="flex justify-content-between items-center">
+        <a class="mr-4 text-right text-sm w-full cursor-pointer">Forgot Password?</a>
       </div>
-  
-      <div>
-        <p-floatlabel variant="on">
-            <input pInputText id="on_label"autocomplete="off" />
-            <label for="on_label">Email</label>
-        </p-floatlabel>
-  
-        <p-floatlabel variant="on">
-            <p-password [toggleMask]="true" id="pw_label" promptLabel="Choose a password" weakLabel="Too simple" mediumLabel="Average complexity" strongLabel="Complex password"/>
-            <label for="pw_label">Password</label>
-        </p-floatlabel>
-  
-        <div class="flex align-items-center justify-content-between mb-6">
-          <div class="flex align-items-center">
-            <p-checkbox inputId="rememberme" [binary]="true" variant="filled" />
-            <label for="rememberme">Remember me</label>
-          </div>
-          <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
-        </div>
-  
-        <button pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
+
+      <div class="flex items-center gap-2">
+        <p-checkbox id="accept" name="accept" value="Accept" />
+        <label for="accept">I agree to the terms and conditions.</label>
       </div>
+
+      <p-button [dt]="buttonDesignToken" type="submit" label="LOGIN" class="mt-2" styleClass="w-[50%]" class="flex justify-content-center" />
     </div>
   </div>
+
+  <!-- Ensures the new section is fully outside the card -->
+</div>
+
+<!-- Or Sign Up Using Section -->
+<div class="flex justify-content-center items-center mt-4">
+  <p>or Sign Up using</p>
+</div>

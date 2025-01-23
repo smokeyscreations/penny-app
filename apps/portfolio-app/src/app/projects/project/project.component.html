@@ -1,0 +1,71 @@
+<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
+<!-- eslint-disable @angular-eslint/template/elements-content -->
+<div formArrayName="projects" class="flex flex-col">
+    <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-normal text-slate-600">Projects</h3>
+        <button [dt]="buttonDesignToken" type="button" pButton label="Add Project"
+            icon="pi pi-plus"></button>
+    </div>
+
+    <div class="p-component rounded-lg border">
+        <h4 class="ml-2 mt-2 text-lg font-normal text-slate-600 mb-3">Title</h4>
+        <p-button type="button" icon="pi pi-times" severity="danger"
+            class="absolute top-4 right-4"></p-button>
+        <div class="flex flex-col mb-4 ml-2 max-w-[96%]">
+            <p-inputgroup>
+                <p-inputgroup-addon>
+                    <i class="pi pi-hashtag"></i>
+                </p-inputgroup-addon>
+                <p-floatlabel>
+                    <input pInputText id="name" class="p-inputtext p-component"  />
+                    <label for="name">Name</label>
+                </p-floatlabel>
+            </p-inputgroup>
+            <!-- <div class="text-red-500 text-sm mt-1">
+                Project name is required.
+            </div> -->
+        </div>
+
+        <div class="flex flex-col mb-4 ml-2 max-w-[96%]">
+            <p-inputgroup>
+                <p-inputgroup-addon>
+                    <i class="pi pi-comments"></i>
+                </p-inputgroup-addon>
+                <p-floatlabel>
+                    <textarea pTextarea id="description" rows="5" cols="61" style="resize: none"
+                        class="p-inputtext border p-component"></textarea>
+                    <label for="summary">Description</label>
+                </p-floatlabel>
+            </p-inputgroup>
+        </div>
+
+        <div class="flex flex-col mb-4 ml-2 max-w-[96%]">
+            <p-inputgroup>
+                <p-inputgroup-addon>
+                    <i class="pi pi-comments"></i>
+                </p-inputgroup-addon>
+                <p-multiselect [options]="projectTypes" placeholder="Select Type" optionLabel="name" display="chip"/>
+            </p-inputgroup>
+            <!-- <div class="text-red-500 text-sm mt-1">
+                Project type is required.
+            </div> -->
+        </div>
+
+
+        <div class="flex flex-col mb-4 ml-2 max-w-[96%]">
+            <label class="mb-2 font-light text-slate-600">Images</label>
+            <p-fileupload [dt]="buttonDesignToken" name="files[]"
+                url="https://www.primefaces.org/cdn/api/upload.php" [multiple]="true" accept="image/*"
+                maxFileSize="2000000" mode="advanced">
+                <ng-template #empty>
+                    <div>Drag and drop files to here to upload.</div>
+                </ng-template>
+                <ng-template #content>
+                    <ul>
+                        <li></li>
+                    </ul>
+                </ng-template>
+            </p-fileupload>
+        </div>
+    </div>
+</div>

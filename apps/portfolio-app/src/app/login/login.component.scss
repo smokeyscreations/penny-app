@@ -5,3 +5,12 @@
     font-style: normal;
     font-size: 18px;
 }
+
+:host {
+    font-family: Inter, sans-serif;
+    font-feature-settings: 'liga' 1, 'calt'; 
+  }
+  @supports (font-variation-settings: normal) {
+    :root { font-family: InterVariable, sans-serif; }
+  }
+  
