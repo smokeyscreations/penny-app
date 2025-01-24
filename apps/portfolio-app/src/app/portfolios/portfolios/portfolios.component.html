@@ -1,18 +1,15 @@
-<!-- eslint-disable @angular-eslint/template/elements-content -->
-<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
-<!-- portfolios.component.html -->
 <div class="flex flex-col items-center justify-center min-h-screen bg-slate-800 p-4">
     <div class="w-full max-w-3xl bg-white shadow-lg rounded-lg p-8 relative">
         <h2 class="text-2xl font-normal mb-4 text-left text-slate-600">Portfolio</h2>
 
-        <form class="space-y-6">
+        <form [formGroup]="form" class="space-y-6">
             <div class="flex flex-col">
                 <p-inputgroup class="mb-2">
                     <p-inputgroup-addon>
                         <i class="pi pi-hashtag"></i>
                     </p-inputgroup-addon>
                     <p-floatlabel>
-                        <input pInputText id="title" class="p-inputtext p-component" />
+                        <input formControlName="portTitle" pInputText id="title" class="p-inputtext p-component" />
                         <label for="title">Title</label>
                     </p-floatlabel>
                 </p-inputgroup>
@@ -25,7 +22,7 @@
                         <i class="pi pi-comments"></i>
                     </p-inputgroup-addon>
                     <p-floatlabel>
-                        <textarea pTextarea id="description" rows="5" cols="61" style="resize: none"
+                        <textarea formControlName="portDesc" pTextarea id="description" rows="5" cols="61" style="resize: none"
                             class="p-inputtext border p-component"></textarea>
                         <label for="summary">Description</label>
                     </p-floatlabel>
@@ -33,28 +30,21 @@
             </div>
 
             <div formGroupName="dateRange" class="flex flex-col">
-                <!-- <label class="mb-2 font-light">Date Range</label> -->
                 <div class="flex space-x-4">
                     <div class="flex flex-col w-1/2">
                         <p-floatlabel variant="over">
-                            <p-datepicker [showIcon]="true" inputId="buttondisplay" [showOnFocus]="false"
+                            <p-datepicker formControlName="portStartDate" [showIcon]="true" inputId="start_date" [showOnFocus]="false"
                                 class="mr-2" />
                             <label for="start_date">Start Date</label>
                         </p-floatlabel>
-                        <!-- <div class="text-red-500 text-sm mt-1">
-                            Start date is required.
-                        </div> -->
                     </div>
 
                     <div class="flex flex-col w-1/2">
                         <p-floatlabel variant="over">
-                            <p-datepicker [showIcon]="true" inputId="buttondisplay" [showOnFocus]="false" class="ml-2"/>
-                            <label for="end_date" class="ml-2">End Date</label>
+                            <p-datepicker [formControl]="this.form.controls.portEndDate" [showIcon]="true" inputId="end_date" [showOnFocus]="false"
+                                class="mr-2" />
+                            <label for="end_date">End Date</label>
                         </p-floatlabel>
-
-                        <!-- <div class="text-red-500 text-sm mt-1">
-                            End date is required.
-                        </div> -->
                     </div>
                 </div>
             </div>

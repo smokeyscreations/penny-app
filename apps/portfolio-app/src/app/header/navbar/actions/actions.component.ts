@@ -32,6 +32,7 @@ export class ActionsComponent {
     'primary.hover.border.color': '#ffb300',
     'primary.active.color': 'black',
     'primary.active.background': '#fba221',
+    'padding.x': '24px'
 
   }
 

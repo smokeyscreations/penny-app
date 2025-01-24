@@ -1,42 +1,39 @@
 <!-- eslint-disable @angular-eslint/template/elements-content -->
 
 <div class="flex align-items-start justify-content-center h-[50%] w-auto pt-8 bg-white">
-  <!-- Card Container -->
-  <div class="surface-card p-4 shadow-2 border-round w-full md:w-3 lg:w-3">
+  <div class="surface-card p-4 shadow-2 rounded-lg w-full md:w-3 lg:w-3">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div pFocusTrap class="w-full sm:w-80 flex flex-col gap-4">
       <p>Log in to your account</p>
       <p-iftalabel>
         <p-iconfield>
           <p-inputicon class="pi pi-envelope" />
-          <input placeholder="Enter your email" type="email" pInputText id="email" class="w-[96%]" />
+          <input formControlName="email" placeholder="Enter your email" type="email" pInputText id="email" class="w-[96%]" />
         </p-iconfield>
-        <label for="username">Email</label>
+        <label for="email">Email</label>
       </p-iftalabel>
 
       <p-iftalabel>
         <p-iconfield>
           <p-inputicon class="pi pi-key" />
-          <input placeholder="Enter your password" type="password" pInputText id="password" class="w-[96%]" />
+          <input formControlName="password" placeholder="Enter your password" type="password" pInputText id="password" class="w-[96%]" />
         </p-iconfield>
         <label for="password">Password</label>
       </p-iftalabel>
+      
       <div class="flex justify-content-between items-center">
         <a class="mr-4 text-right text-sm w-full cursor-pointer">Forgot Password?</a>
       </div>
-
       <div class="flex items-center gap-2">
         <p-checkbox id="accept" name="accept" value="Accept" />
         <label for="accept">I agree to the terms and conditions.</label>
       </div>
-
       <p-button [dt]="buttonDesignToken" type="submit" label="LOGIN" class="mt-2" styleClass="w-[50%]" class="flex justify-content-center" />
+      <p>Don't have an account?</p>
     </div>
+    </form>
   </div>
-
-  <!-- Ensures the new section is fully outside the card -->
 </div>
-
-<!-- Or Sign Up Using Section -->
 <div class="flex justify-content-center items-center mt-4">
   <p>or Sign Up using</p>
 </div>

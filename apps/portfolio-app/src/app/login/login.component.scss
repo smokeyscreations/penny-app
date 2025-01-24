@@ -1,14 +1,11 @@
-:host{
-    font-family: 'Montserrat', serif;
-    font-optical-sizing: auto;
-    font-weight: 350;
-    font-style: normal;
-    font-size: 18px;
-}
 
 :host {
     font-family: Inter, sans-serif;
     font-feature-settings: 'liga' 1, 'calt'; 
+    font-optical-sizing: auto;
+    font-weight: 350;
+    font-style: normal;
+    font-size: 18px;
   }
   @supports (font-variation-settings: normal) {
     :root { font-family: InterVariable, sans-serif; }

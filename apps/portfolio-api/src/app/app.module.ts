@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { PortfoliosModule } from './portfolios/portfolios.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProjectModule } from './projects/project.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ProjectModule } from './projects/project.module';
       'mongodb+srv://husain:Z3uNrZYYyTYALJaA@penny.0fdej.mongodb.net/?retryWrites=true&w=majority&appName=Penny'
     ),
     ProjectModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

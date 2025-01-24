@@ -28,16 +28,29 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ProjectComponent } from "../../projects/project/project.component";
+import { FormControl, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-portfolios',
   templateUrl: './portfolios.component.html',
   styleUrls: ['./portfolios.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SpeedDialModule, FileUploadModule, DatePickerModule, FloatLabelModule, CascadeSelectModule, InputGroupModule, InputGroupAddonModule, ButtonModule, CommonModule, MultiSelectModule, ToolbarModule, IconFieldModule, InputIconModule, SplitButtonModule, ProjectComponent]
+  imports: [ReactiveFormsModule, SpeedDialModule, FileUploadModule, DatePickerModule, FloatLabelModule, CascadeSelectModule, InputGroupModule, InputGroupAddonModule, ButtonModule, CommonModule, MultiSelectModule, ToolbarModule, IconFieldModule, InputIconModule, SplitButtonModule, ProjectComponent]
 })
 export class PortfoliosComponent implements OnInit {
 
+  form = new FormGroup({
+    portTitle: new FormControl(),
+    portDesc: new FormControl(''), 
+    portStartDate: new FormControl(''),
+    portEndDate: new FormControl(''),
+
+    projTitle: new FormControl(''),
+    projName: new FormControl(''),
+    projDescription: new FormControl(''),
+    projImages: new FormControl('')
+
+  });
   readonly items = signal<MenuItem[]>(speedDialItems);
 
   portfolios$!: Observable<Portfolio[]>;

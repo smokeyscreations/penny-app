@@ -7,10 +7,13 @@ import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class UsersService {
+  findOneBy(arg0: { email: string; }) {
+      throw new Error('Method not implemented.');
+  }
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
-  create(createUserDto: CreateUserDto) {
-    const userToCreate = new this.userModel(createUserDto)
-    return userToCreate.save();
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const createdUser = await this.userModel.create(createUserDto);
+    return createdUser.save();
   }
 
   async findAll() {
@@ -18,15 +21,28 @@ export class UsersService {
   }
   
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: string): Promise<User> {
+    return this.userModel.findOne({_id: id}).exec();
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async findById(id: string): Promise<User | null> {
+    return this.userModel.findById(id).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async findOneByEmail(email: string): Promise<User> {
+    return this.userModel.findOne({email: email}).exec();
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User>{
+    return this.userModel
+      .findByIdAndUpdate({ _id: id }, updateUserDto, { new: true })
+      .exec();
+  }
+
+  async delete(id: string): Promise<User> {
+    const deletedUser = await this.userModel
+      .findByIdAndDelete({ _id: id })
+      .exec();
+    return deletedUser;
   }
 }

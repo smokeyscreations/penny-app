@@ -29,7 +29,7 @@ export class NavbarComponent {
     'border.color': 'none',
     padding: '0.5rem',
     'item.color': 'white',
-    'item.focus.background': '#f9b205',
+    'item.focus.background': '#ffb300',
     'item.active.background': '#e0e0e0',
     'item.padding': '0.25rem 0.75rem',
   };

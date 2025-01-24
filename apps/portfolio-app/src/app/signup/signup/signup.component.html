@@ -1,0 +1,32 @@
+<div class="flex align-items-start justify-content-center h-[50%] w-auto pt-8 bg-white">
+    <div class="surface-card shadow-1 rounded-lg p-4" style="width: 320px;">
+      <h2 class="text-center font-semibold mb-4">Create your account</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
+        <div class="flex flex-col gap-2">
+            <label class="text-xs ml-0.6" for="username">Username</label>
+            <input formControlName="username"  class="text-sm" placeholder="Enter your username" pInputText id="username"/>
+        </div>        
+        <div class="flex flex-col gap-2">
+            <label class="text-xs ml-0.6" for="email">Email</label>
+            <input formControlName="email" type="email" class="text-sm" placeholder="example@example.com" pInputText id="email"/>
+        </div>   
+        <div class="flex flex-col gap-2">
+            <label class="text-xs ml-0.6" for="password">Password</label>
+            <input formControlName="password" type="password" class="text-sm" placeholder="Enter your password" pInputText id="password"/>
+        </div> 
+        <p-button [dt]="buttonDesignToken" type="submit" label="SIGN UP" class="mt-2" styleClass="w-[50%]" class="flex justify-content-center" />
+      </form>
+      <p class="text-center mt-2">
+        Already have an account?
+        <a>Log In</a>
+      </p>
+      <div class="flex align-items-center justify-content-center my-3">
+        <p-divider layout="horizontal" class="flex-1 mr-2"></p-divider>
+        <span class="mx-1">or</span>
+        <p-divider layout="horizontal" class="flex-1 ml-2"></p-divider>
+      </div>
+      <p-button label="Sign Up with Google" icon="pi pi-google" class="w-full p-button-outlined"></p-button>
+      
+    </div>
+  </div>
+  
