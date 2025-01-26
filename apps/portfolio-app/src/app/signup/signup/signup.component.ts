@@ -48,7 +48,7 @@ export class SignupComponent {
       password: password!
     }));
 
-    this.router.navigate(['/home']);
+    window.location.reload();
     this.form.reset();
   }
 

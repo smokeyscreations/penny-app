@@ -28,9 +28,9 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ProjectComponent } from "../../projects/project/project.component";
-import { FormControl, FormGroup, FormArray, ReactiveFormsModule, Validators, NgModel } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-portfolios',
@@ -39,7 +39,7 @@ import { Router, RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, SpeedDialModule, FileUploadModule, 
     DatePickerModule, FloatLabelModule, CascadeSelectModule, InputGroupModule, InputGroupAddonModule, ButtonModule, 
-    CommonModule, MultiSelectModule, ToolbarModule, IconFieldModule, InputIconModule, SplitButtonModule, ProjectComponent, InputTextModule, RouterLink]
+    CommonModule, MultiSelectModule, ToolbarModule, IconFieldModule, InputIconModule, SplitButtonModule, ProjectComponent, InputTextModule]
 })
 export class PortfoliosComponent implements OnInit {
 
@@ -132,9 +132,6 @@ export class PortfoliosComponent implements OnInit {
     this.store.dispatch(PortfolioActions.loadPortfolio({ id }));
   }
 
-  navigateToPortfolios(){
-    this.router.navigateByUrl('/create-portfolios');
-    console.log('click');
-  }
+
 
 }

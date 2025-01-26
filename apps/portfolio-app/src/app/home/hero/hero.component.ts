@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
+import { StartingPointComponent } from './starting-point/starting-point.component';
 
 @Component({
   selector: 'app-hero',
-  imports: [ImageModule, ButtonModule],
+  imports: [ImageModule, ButtonModule, StartingPointComponent],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

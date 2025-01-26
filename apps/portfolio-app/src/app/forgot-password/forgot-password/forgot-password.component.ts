@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [FormsModule, ReactiveFormsModule, AsyncPipe, InputTextModule, ButtonModule, MessageModule, RouterLink],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, ButtonModule, MessageModule, RouterLink],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
