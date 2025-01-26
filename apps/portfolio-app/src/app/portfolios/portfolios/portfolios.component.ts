@@ -1,6 +1,6 @@
 // src/app/portfolios/portfolios.component.ts
 
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Portfolio } from '../portfolio.model';
@@ -8,8 +8,8 @@ import * as PortfolioActions from '../../store/portfolio-store/portfolios.action
 import { 
   selectAllPortfolios, 
   selectSelectedPortfolio, 
-  selectLoading, 
-  selectError 
+  selectPortfolioLoading,
+  selectPortfolioError
 } from '../../store/portfolio-store/portfolios.selector';
 import { AsyncPipe, CommonModule, NgFor, NgIf } from '@angular/common';
 import { SpeedDialModule } from 'primeng/speeddial';
@@ -28,35 +28,44 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ProjectComponent } from "../../projects/project/project.component";
-import { FormControl, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormArray, ReactiveFormsModule, Validators, NgModel } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-portfolios',
   templateUrl: './portfolios.component.html',
   styleUrls: ['./portfolios.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, SpeedDialModule, FileUploadModule, DatePickerModule, FloatLabelModule, CascadeSelectModule, InputGroupModule, InputGroupAddonModule, ButtonModule, CommonModule, MultiSelectModule, ToolbarModule, IconFieldModule, InputIconModule, SplitButtonModule, ProjectComponent]
+  imports: [ReactiveFormsModule, SpeedDialModule, FileUploadModule, 
+    DatePickerModule, FloatLabelModule, CascadeSelectModule, InputGroupModule, InputGroupAddonModule, ButtonModule, 
+    CommonModule, MultiSelectModule, ToolbarModule, IconFieldModule, InputIconModule, SplitButtonModule, ProjectComponent, InputTextModule, RouterLink]
 })
 export class PortfoliosComponent implements OnInit {
 
-  form = new FormGroup({
-    portTitle: new FormControl(),
-    portDesc: new FormControl(''), 
-    portStartDate: new FormControl(''),
-    portEndDate: new FormControl(''),
-
-    projTitle: new FormControl(''),
-    projName: new FormControl(''),
-    projDescription: new FormControl(''),
-    projImages: new FormControl('')
-
-  });
-  readonly items = signal<MenuItem[]>(speedDialItems);
-
+  private router = inject(Router);
   portfolios$!: Observable<Portfolio[]>;
   selectedPortfolio$!: Observable<Portfolio | null>;
   loading$!: Observable<boolean>;
   error$!: Observable<any>;
+
+  form = new FormGroup({
+    title: new FormControl('', {
+      validators: [Validators.required]
+    }),
+    portfolioSummary: new FormControl('', {
+      validators: Validators.required
+    }),
+    dateRange: new FormGroup({
+      start: new FormControl(null),
+      end: new FormControl(null),
+    }),
+  });
+ 
+  constructor(private store: Store) {}
+  readonly items = signal<MenuItem[]>(speedDialItems);
+
+
 
   buttonDesignToken = {
     'border.radius': '6px',
@@ -87,17 +96,45 @@ export class PortfoliosComponent implements OnInit {
   splitIems = [];
 
   uploadedFiles = [];
-  constructor(private store: Store) {}
 
+
+  onSubmit(): void {
+    if (this.form.invalid) {
+      console.log('invalid');
+      return;
+    }
+
+    const formValue = this.form.value;
+    const newPortfolio = {
+      title: formValue.title,
+      portfolioSummary: formValue.portfolioSummary,
+      dateRange: {
+        start: formValue.dateRange?.start,
+        end: formValue.dateRange?.end,
+      },
+    };
+
+    this.store.dispatch(PortfolioActions.createPortfolio({ portfolio: newPortfolio }));
+
+    this.router.navigateByUrl('/my-portfolios');
+    this.form.reset();
+    
+  }
   ngOnInit(): void {
     this.store.dispatch(PortfolioActions.loadPortfolios());
-    this.portfolios$ = this.store.pipe(select(selectAllPortfolios));
-    this.selectedPortfolio$ = this.store.pipe(select(selectSelectedPortfolio));
-    this.loading$ = this.store.pipe(select(selectLoading));
-    this.error$ = this.store.pipe(select(selectError));
+
+    this.portfolios$ = this.store.select(selectAllPortfolios);
+    this.selectedPortfolio$ = this.store.select(selectSelectedPortfolio);
+    this.loading$ = this.store.select(selectPortfolioLoading);
+    this.error$ = this.store.select(selectPortfolioError);
   }
   selectPortfolio(id: string): void {
     this.store.dispatch(PortfolioActions.loadPortfolio({ id }));
+  }
+
+  navigateToPortfolios(){
+    this.router.navigateByUrl('/create-portfolios');
+    console.log('click');
   }
 
 }

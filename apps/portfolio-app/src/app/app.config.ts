@@ -7,16 +7,21 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import MyPreset from './themes/mypreset';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { portfolioFeatureKey, portfolioReducer } from './store/portfolio-store/portfolio.reducer';
+import { portfolioReducer } from './store/portfolio-store/portfolio.reducer';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { userFeatureKey, userReducer } from './store/user-store/user.reducer';
+import { UserEffects } from './store/user-store/user.effects';
+import { PortfolioEffects } from './store/portfolio-store/portfolios.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideEffects(),
+    provideEffects(UserEffects, PortfolioEffects),
     provideStoreDevtools({
       maxAge: 25, autoPause: true
     }),
-    provideStore({[portfolioFeatureKey]: portfolioReducer}),
+    provideStore({'portfolio': portfolioReducer,
+      [userFeatureKey]: userReducer,
+    }),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
     provideHttpClient(withFetch()),

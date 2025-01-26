@@ -1,33 +1,24 @@
-// src/app/store/portfolios.selectors.ts
-
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import * as fromPortfolios from './portfolio.reducer';
+import { PortfolioState } from './portfolio.reducer';
 
-// Feature Selector
-export const selectPortfolioFeature = createFeatureSelector<fromPortfolios.State>(
-  fromPortfolios.portfolioFeatureKey
-);
+export const selectPortfolioState = createFeatureSelector<PortfolioState>('portfolio');
 
-// Select all portfolios
 export const selectAllPortfolios = createSelector(
-  selectPortfolioFeature,
-  (state: fromPortfolios.State) => state.portfolios
+  selectPortfolioState,
+  (state) => state.portfolios
 );
 
-// Select selected portfolio
 export const selectSelectedPortfolio = createSelector(
-  selectPortfolioFeature,
-  (state: fromPortfolios.State) => state.selectedPortfolio
+  selectPortfolioState,
+  (state) => state.selectedPortfolio
 );
 
-// Select loading state
-export const selectLoading = createSelector(
-  selectPortfolioFeature,
-  (state: fromPortfolios.State) => state.loading
+export const selectPortfolioLoading = createSelector(
+  selectPortfolioState,
+  (state) => state.loading
 );
 
-// Select error state
-export const selectError = createSelector(
-  selectPortfolioFeature,
-  (state: fromPortfolios.State) => state.error
+export const selectPortfolioError = createSelector(
+  selectPortfolioState,
+  (state) => state.error
 );

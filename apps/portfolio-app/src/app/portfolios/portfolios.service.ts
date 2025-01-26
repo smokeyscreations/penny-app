@@ -14,26 +14,20 @@ export class PortfoliosService {
 
   constructor(private httpClient: HttpClient) {}
 
-  // Fetch all portfolios
   getPortfolios(): Observable<Portfolio[]> {
     return this.httpClient.get<{ portfolios: Portfolio[] }>(this.apiUrl).pipe(
       map(response => response.portfolios)
     );
   }
-
-  // Fetch a single portfolio by ID
   getPortfolio(portfolioId: string): Observable<Portfolio> {
     const url = `${this.apiUrl}/${portfolioId}`;
     return this.httpClient.get<Portfolio>(url);
   }
-
-  // Edit a portfolio
   editPortfolio(model: Portfolio): Observable<Portfolio> {
     const url = `${this.apiUrl}/${model._id}`;
     return this.httpClient.put<Portfolio>(url, model);
   }
-
-  // Delete a portfolio
+  
   deletePortfolio(portfolioId: string): Observable<any> {
     const url = `${this.apiUrl}/${portfolioId}`;
     return this.httpClient.delete(url);

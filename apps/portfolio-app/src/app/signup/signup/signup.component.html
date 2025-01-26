@@ -1,5 +1,5 @@
 <div class="flex align-items-start justify-content-center h-[50%] w-auto pt-8 bg-white">
-    <div class="surface-card shadow-1 rounded-lg p-4" style="width: 320px;">
+    <div class="surface-card shadow-1 rounded-lg p-4" style="width: 400px;">
       <h2 class="text-center font-semibold mb-4">Create your account</h2>
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
         <div class="flex flex-col gap-2">
@@ -16,17 +16,16 @@
         </div> 
         <p-button [dt]="buttonDesignToken" type="submit" label="SIGN UP" class="mt-2" styleClass="w-[50%]" class="flex justify-content-center" />
       </form>
-      <p class="text-center mt-2">
+      <p class="text-center font-light mt-3">
         Already have an account?
-        <a>Log In</a>
+        <a class="font-semibold" [routerLink]="['/login']" >Log In</a>
       </p>
       <div class="flex align-items-center justify-content-center my-3">
         <p-divider layout="horizontal" class="flex-1 mr-2"></p-divider>
         <span class="mx-1">or</span>
         <p-divider layout="horizontal" class="flex-1 ml-2"></p-divider>
       </div>
-      <p-button label="Sign Up with Google" icon="pi pi-google" class="w-full p-button-outlined"></p-button>
-      
+      <p-button label="Sign Up with Google" icon="pi pi-google" class="flex justify-content-center items-center w-full"></p-button>
     </div>
   </div>
   

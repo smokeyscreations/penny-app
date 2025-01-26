@@ -1,26 +1,27 @@
-// src/app/store/portfolio-store/portfolios.effects.ts
-
-import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as PortfolioActions from './portfolios.action';
-import { PortfoliosService } from '../../portfolios/portfolios.service';
-import { catchError, map, mergeMap, of } from 'rxjs';
+import { switchMap, map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Portfolio } from '../../portfolios/portfolio.model';
 
 @Injectable()
-export class PortfoliosEffects {
+export class PortfolioEffects {
+  private API_URL = 'http://localhost:3000/api/portfolios'; 
 
-  constructor(
-    private actions$: Actions,
-    private portfoliosService: PortfoliosService
-  ) {}
+  private actions$ = inject(Actions);
+  private http = inject(HttpClient);
 
   loadPortfolios$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PortfolioActions.loadPortfolios),
-      mergeMap(() =>
-        this.portfoliosService.getPortfolios().pipe(
-          map(portfolios => PortfolioActions.loadPortfoliosSuccess({ portfolios })),
-          catchError(error => of(PortfolioActions.loadPortfoliosFailure({ error })))
+      switchMap(() =>
+        this.http.get<Portfolio[]>(this.API_URL, { withCredentials: true }).pipe(
+          map((portfolios) =>
+            PortfolioActions.loadPortfoliosSuccess({ portfolios })
+          ),
+          catchError((error) => of(PortfolioActions.loadPortfoliosFailure({ error })))
         )
       )
     )
@@ -29,13 +30,68 @@ export class PortfoliosEffects {
   loadPortfolio$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PortfolioActions.loadPortfolio),
-      mergeMap(action =>
-        this.portfoliosService.getPortfolio(action.id).pipe(
-          map(portfolio => PortfolioActions.loadPortfolioSuccess({ portfolio })),
-          catchError(error => of(PortfolioActions.loadPortfolioFailure({ error })))
+      switchMap(({ id }) =>
+        this.http.get<Portfolio>(`${this.API_URL}/${id}`, { withCredentials: true }).pipe(
+          map((portfolio) =>
+            PortfolioActions.loadPortfolioSuccess({ portfolio })
+          ),
+          catchError((error) => of(PortfolioActions.loadPortfolioFailure({ error })))
         )
       )
     )
   );
 
+  createPortfolio$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PortfolioActions.createPortfolio),
+      switchMap(({ portfolio }) =>
+        this.http
+          .post<Portfolio>(this.API_URL, portfolio, { withCredentials: true })
+          .pipe(
+            map((newPortfolio) =>
+              PortfolioActions.createPortfolioSuccess({ portfolio: newPortfolio })
+            ),
+            catchError((error) =>
+              of(PortfolioActions.createPortfolioFailure({ error }))
+            )
+          )
+      )
+    )
+  );
+
+  updatePortfolio$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PortfolioActions.updatePortfolio),
+      switchMap(({ id, changes }) =>
+        this.http
+          .patch<Portfolio>(`${this.API_URL}/${id}`, changes, { withCredentials: true })
+          .pipe(
+            map((updatedPortfolio) =>
+              PortfolioActions.updatePortfolioSuccess({ portfolio: updatedPortfolio })
+            ),
+            catchError((error) =>
+              of(PortfolioActions.updatePortfolioFailure({ error }))
+            )
+          )
+      )
+    )
+  );
+
+  deletePortfolio$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PortfolioActions.deletePortfolio),
+      switchMap(({ id }) =>
+        this.http
+          .delete<{ message?: string }>(`${this.API_URL}/${id}`, {
+            withCredentials: true,
+          })
+          .pipe(
+            map(() => PortfolioActions.deletePortfolioSuccess({ id })),
+            catchError((error) =>
+              of(PortfolioActions.deletePortfolioFailure({ error }))
+            )
+          )
+      )
+    )
+  );
 }

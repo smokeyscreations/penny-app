@@ -1,57 +1,88 @@
+// src/app/portfolios/portfolios.controller.ts
 import {
   Controller,
   Get,
   Post,
   Body,
-  Patch,
   Param,
+  Req,
+  UseGuards,
+  UnauthorizedException,
   Delete,
-  Query,
-  BadRequestException,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { PortfoliosService } from './portfolios.service';
 import { CreatePortfolioDto } from './dto/create-portfolio.dto';
-import { UpdatePortfolioDto } from './dto/update-portfolio.dto';
+import { AuthenticationGuard } from '../auth/auth.guard.';
+import { JwtService } from '@nestjs/jwt';
 
+@UseGuards(AuthenticationGuard)
 @Controller('portfolios')
 export class PortfoliosController {
-  constructor(private readonly portfoliosService: PortfoliosService) {}
+  constructor(
+    private readonly portfoliosService: PortfoliosService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   @Post()
-  create(@Body() createPortfolioDto: CreatePortfolioDto) {
+  async create(@Body() createPortfolioDto: CreatePortfolioDto, @Req() request: Request) {
+    const cookie = (request as any).cookies?.['jwt'];
+    if (!cookie) {
+      throw new UnauthorizedException('No JWT cookie found');
+    }
+
+    const data = await this.jwtService.verifyAsync(cookie);
+    if (!data) {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
+    createPortfolioDto.userId = data.sub;
+
     return this.portfoliosService.create(createPortfolioDto);
   }
 
   @Get()
-  findAll(@Query() queryParams) {
-
-    const id = queryParams.portfolioId
-    if(id){
-      try {
-        return this.portfoliosService.getPortfolioById(id);
-      } catch (error) {
-        throw new BadRequestException('Something bad happened'), { cause: new Error(error.message), description: 'Some error description'}
-      }
-      
+  async findAll(@Req() request: Request) {
+    const cookie = (request as any).cookies?.['jwt'];
+    if (!cookie) {
+      throw new UnauthorizedException('No JWT cookie found');
     }
-    return this.portfoliosService.findAll();
+
+    const data = await this.jwtService.verifyAsync(cookie);
+    if (!data) {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
+
+    return this.portfoliosService.findAllByUser(data.sub);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.portfoliosService.findOne(+id);
-  }
+  async findOne(@Param('id') id: string, @Req() request: Request) {
+    const cookie = (request as any).cookies?.['jwt'];
+    if (!cookie) {
+      throw new UnauthorizedException('No JWT cookie found');
+    }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updatePortfolioDto: UpdatePortfolioDto
-  ) {
-    return this.portfoliosService.update(+id, updatePortfolioDto);
+    const data = await this.jwtService.verifyAsync(cookie);
+    if (!data) {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
+
+    return this.portfoliosService.findOneByIdAndUser(id, data.sub);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.portfoliosService.remove(+id);
+  async remove(@Param('id') id: string, @Req() request: Request) {
+    const cookie = (request as any).cookies?.['jwt'];
+    if (!cookie) {
+      throw new UnauthorizedException('No JWT cookie found');
+    }
+
+    const data = await this.jwtService.verifyAsync(cookie);
+    if (!data) {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
+
+    return this.portfoliosService.removeByIdAndUser(id, data.sub);
   }
+
 }

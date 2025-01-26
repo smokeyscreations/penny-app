@@ -2,14 +2,14 @@
     <div class="w-full max-w-3xl bg-white shadow-lg rounded-lg p-8 relative">
         <h2 class="text-2xl font-normal mb-4 text-left text-slate-600">Portfolio</h2>
 
-        <form [formGroup]="form" class="space-y-6">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
             <div class="flex flex-col">
                 <p-inputgroup class="mb-2">
                     <p-inputgroup-addon>
                         <i class="pi pi-hashtag"></i>
                     </p-inputgroup-addon>
                     <p-floatlabel>
-                        <input formControlName="portTitle" pInputText id="title" class="p-inputtext p-component" />
+                        <input formControlName="title" pInputText id="title" />
                         <label for="title">Title</label>
                     </p-floatlabel>
                 </p-inputgroup>
@@ -22,9 +22,9 @@
                         <i class="pi pi-comments"></i>
                     </p-inputgroup-addon>
                     <p-floatlabel>
-                        <textarea formControlName="portDesc" pTextarea id="description" rows="5" cols="61" style="resize: none"
-                            class="p-inputtext border p-component"></textarea>
-                        <label for="summary">Description</label>
+                        <input pInputText id="description" formControlName="portfolioSummary" style="resize: none"
+                            class="p-inputtext border p-component">
+                        <label for="description">Description</label>
                     </p-floatlabel>
                 </p-inputgroup>
             </div>
@@ -33,7 +33,7 @@
                 <div class="flex space-x-4">
                     <div class="flex flex-col w-1/2">
                         <p-floatlabel variant="over">
-                            <p-datepicker formControlName="portStartDate" [showIcon]="true" inputId="start_date" [showOnFocus]="false"
+                            <p-datepicker formControlName="start" [showIcon]="true" inputId="start_date" [showOnFocus]="false"
                                 class="mr-2" />
                             <label for="start_date">Start Date</label>
                         </p-floatlabel>
@@ -41,7 +41,7 @@
 
                     <div class="flex flex-col w-1/2">
                         <p-floatlabel variant="over">
-                            <p-datepicker [formControl]="this.form.controls.portEndDate" [showIcon]="true" inputId="end_date" [showOnFocus]="false"
+                            <p-datepicker formControlName="end" [showIcon]="true" inputId="end_date" [showOnFocus]="false"
                                 class="mr-2" />
                             <label for="end_date">End Date</label>
                         </p-floatlabel>
@@ -52,12 +52,12 @@
             <div class="flex flex-col mb-4">
                 <p-toolbar>
                     <ng-template #start>
-                        <p-button icon="pi pi-plus" class="mr-2" text severity="secondary" />
+                        <p-button (click)="navigateToPortfolios()" icon="pi pi-plus" class="mr-2" text severity="secondary" />
                         <p-button icon="pi pi-print" class="mr-2" text severity="secondary" />
                         <p-button icon="pi pi-upload" text severity="secondary" />
                     </ng-template>
                     <ng-template #end>
-                        <p-splitbutton label="Save" [model]="splitIems" />
+                        <p-splitbutton type="submit" (click)="onSubmit()" label="Save" [model]="splitIems" />
                     </ng-template>
                 </p-toolbar>
             </div>

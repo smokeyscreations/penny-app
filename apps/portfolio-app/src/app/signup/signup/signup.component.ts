@@ -5,15 +5,24 @@ import { DividerModule } from 'primeng/divider';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import * as UserActions from '../../store/user-store/user.actions';
+import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-signup',
-  imports: [FloatLabelModule, ButtonModule, DividerModule, IftaLabelModule, InputTextModule, ReactiveFormsModule],
+  imports: [FloatLabelModule, ButtonModule, DividerModule, IftaLabelModule, InputTextModule, ReactiveFormsModule, RouterLink],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignupComponent { 
+export class SignupComponent {
+
+  constructor(private store: Store, private router: Router) {
+
+  }
 
   form = new FormGroup({
     username: new FormControl('', {
@@ -24,19 +33,24 @@ export class SignupComponent {
     }),
     password: new FormControl('', {
       validators: [Validators.required, Validators.minLength(8)],
-    }),
-    agree: new FormControl(false, {
-      validators: [Validators.required]
-    }),
+    })
   });
 
-  onSubmit(){
+  onSubmit() {
+    if (this.form.invalid) return;
+
+    console.log('Submitting');
+
+    const { username, email, password } = this.form.value;
+    this.store.dispatch(UserActions.signup({
+      name: username!,
+      email: email!,
+      password: password!
+    }));
+
+    this.router.navigate(['/home']);
     this.form.reset();
   }
-
-
-
-
 
 
 

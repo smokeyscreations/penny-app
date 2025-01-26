@@ -1,0 +1,48 @@
+<div class="bg-[#f0f0f0] w-screen h-screen">
+
+    @if(loading$ | async){
+    <div>Loading...</div>
+    }
+
+    @if(error$ | async){
+    <div style="color: red;">
+    </div>
+    }
+    <p-toolbar>
+        <ng-template #start>
+            <p-button (click)="navigateToPortfolios()" icon="pi pi-plus" class="mr-2" text severity="secondary" />
+            <p-button icon="pi pi-print" class="mr-2" text severity="secondary" />
+            <p-button icon="pi pi-upload" text severity="secondary" />
+        </ng-template>
+        <ng-template #center>
+            <p-iconfield iconPosition="left">
+                <p-inputicon styleClass="pi pi-search" />
+                <input type="text" pInputText placeholder="Search" />
+            </p-iconfield>
+        </ng-template>
+        <ng-template #end>
+            <p-splitbutton label="Save" />
+        </ng-template>
+    </p-toolbar>
+    <div>
+        <p class="text-3xl font-semibold ml-3 pt-3 pb-3"> {{userName()}}'s Portfolios</p>
+    </div>
+
+    @for(portfolios of (portfolios$ | async); track portfolios._id){
+    <div class="flex flex-col gap-4 px-4 pb-8">
+        <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
+            <ng-template #title> {{portfolios.title}} </ng-template>
+            <ng-template #subtitle> {{portfolios.dateRange?.start| date}} {{portfolios.dateRange?.end | date}}
+            </ng-template>
+            <p>
+                {{portfolios.portfolioSummary}}
+            </p>
+            <ng-template #footer>
+                <div class="flex gap-4 mt-1">
+                    <p-button label="Delete" (click)="onDelete(portfolios._id!)" severity="danger" class="w-full" [outlined]="true" styleClass="w-full" />
+                    <p-button [dt]="buttonDesignToken" label="Edit" class="w-full" styleClass="w-full" />
+                </div>
+            </ng-template>
+        </p-card>
+    </div>
+    }

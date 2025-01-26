@@ -1,3 +1,12 @@
 <!-- eslint-disable @angular-eslint/template/elements-content -->
-<p-button [dt]="loginButtonToken" [routerLink]="['/login']" label="Login" class ="mr-2"></p-button>
-<p-button [dt]="buttonToken" [routerLink]="['/portfolios']" label="Create a portfolio"></p-button>
+<div class="flex items-center space-x-3">
+@if(user$ | async ){
+
+        <app-user-popover></app-user-popover>
+
+    
+}@else{
+    <p-button [dt]="loginButtonToken" [routerLink]="['/login']" label="Login" class="mr-2"></p-button>
+}
+<p-button [dt]="buttonToken" [routerLink]="['/create-portfolios']" label="Create a portfolio"></p-button>
+</div>

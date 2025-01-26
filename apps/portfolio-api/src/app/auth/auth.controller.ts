@@ -1,10 +1,14 @@
-import { BadRequestException, Body, Controller, Get, Post, Req, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, Put, Req, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { GoogleAuthGuard } from './utils/Guards';
 import { AuthService } from './auth.service';
 import * as bcrypt from 'bcrypt';
 import { User } from '../users/schemas/user.schema';
 import {JwtService} from "@nestjs/jwt";
 import {Response, Request} from 'express';
+import { ChangePasswordDto } from '../users/dto/change-password.dto';
+import { AuthenticationGuard } from './auth.guard.';
+import { ForgotPasswordDto } from '../users/dto/forgot-password.dto';
+import { ResetPasswordDto } from '../users/dto/reset-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -107,5 +111,42 @@ export class AuthController {
   handleRedirect() {
     return {msg: 'OK'};
   }
+
+  @Post('forgot-password')
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(forgotPasswordDto.email);
+  }
+
+  @Put('reset-password')
+  async resetPassword(
+    @Body() resetPasswordDto: ResetPasswordDto,
+  ){
+    return this.authService.resetPassword(
+      resetPasswordDto.newPassword,
+      resetPasswordDto.resetToken,
+    );
+  }
+
+  @UseGuards(AuthenticationGuard)
+  @Put('change-password')
+  async changePassword(@Body() changePasswordDto: ChangePasswordDto, @Req() req: Request ){
+    const cookie = req.cookies['jwt'];
+      const data = await this.jwtService.verifyAsync(cookie);
+
+      const user = data.sub;
+      console.log('This is the user id' + user)
+
+    if(!user){
+      throw new BadRequestException('Invalid user');
+    }
+    
+    return this.authService.changePassword(
+      user,
+      changePasswordDto.oldPassword,
+      changePasswordDto.newPassword
+    )
+  }
+  
+  
 }
 

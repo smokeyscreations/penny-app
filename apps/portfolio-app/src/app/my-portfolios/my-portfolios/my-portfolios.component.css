@@ -1,0 +1,23 @@
+:host ::ng-deep .p-splitbutton-button{
+  background-color: #131C22;
+  color: white;
+  border: none;
+}
+
+:host ::ng-deep .p-splitbutton-button:hover{
+  background-color: #1C2933;
+  border: none;
+  color: white;
+}
+
+:host ::ng-deep .p-splitbutton-dropdown{
+  background-color: #131C22;
+  border: none;
+  color: white;
+}
+
+:host ::ng-deep .p-splitbutton-dropdown:hover{
+  background-color: #1C2933;
+  border: none;
+  color: white;
+}

@@ -1,9 +1,8 @@
+// user.model.ts
 export interface User {
-    _id?: string; 
-    name: string;
-    email: string;
-    password?: string;   
-    firstName: string;
-    lastName: string;
-  }
-  
+  _id?: string;
+  name?: string;
+  email: string;
+  password?: string;
+  googleId?: string;
+}

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FileUploadModule } from 'primeng/fileupload';
 import {  DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -22,20 +22,15 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class ProjectComponent { 
 
+  @Input() group!: FormGroup; 
+  @Output() remove = new EventEmitter<void>(); 
 
-  form = new FormGroup({
-      portTitle: new FormControl(),
-      portDesc: new FormControl(''), 
-      portDate1: new FormControl(''),
-      portDate2: new FormControl(''),
-  
-      projTitle: new FormControl(''),
-      projName: new FormControl(''),
-      projDescription: new FormControl(''),
-      projImages: new FormControl('')
-  
-    });
-
+  projectTypes = [
+    { name: 'Game Development' },
+    { name: 'Web Development' },
+    { name: 'Mobile Development' },
+    { name: 'Software Development' },
+  ];
   buttonDesignToken = {
     'border.radius': '6px',
     'primary.background': '#131C22',
@@ -48,6 +43,4 @@ export class ProjectComponent {
     'primary.active.color': '#BACBD9',
     'primary.active.border.color': 'none',
   };
-
-    projectTypes = [{'name' : 'Game Development'}, {'name' : 'Web Development'}, {'name' : 'Mobile Development'}, {'name' : 'Software Development'}]
 }

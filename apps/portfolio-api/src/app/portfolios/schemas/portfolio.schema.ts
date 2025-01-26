@@ -1,14 +1,12 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument, Types } from 'mongoose';
-import { User } from '../../users/schemas/user.schema';
-import { Project, ProjectSchema } from '../../projects/schemas/project.schema';
+// src/app/portfolios/schemas/portfolio.schema.ts
 
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { User } from '../../users/schemas/user.schema';
 
 export type PortfolioDocument = HydratedDocument<Portfolio>;
 
-@Schema({
-    timestamps: true,
-})
+@Schema({ timestamps: true })
 export class Portfolio {
   @Prop({ required: true })
   title: string;
@@ -19,14 +17,11 @@ export class Portfolio {
   @Prop({
     type: {
       start: { type: Date },
-      end: { type: Date }
+      end: { type: Date },
     },
     default: undefined,
   })
   dateRange?: { start: Date; end: Date };
-
-  @Prop({ type: [ProjectSchema], default: [] })
-  projects: Project[];
 
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;

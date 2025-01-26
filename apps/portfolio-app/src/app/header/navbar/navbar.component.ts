@@ -5,6 +5,8 @@ import { ButtonModule } from 'primeng/button';
 import { initialMenuItems } from './menu-items.model';
 import { MenuItem } from 'primeng/api';
 import { ActionsComponent } from "./actions/actions.component";
+import { Router } from '@angular/router';
+import { RedirectService } from '../../shared/button/redirect.service';
 
 @Component({
   standalone: true,
@@ -21,7 +23,14 @@ import { ActionsComponent } from "./actions/actions.component";
 })
 export class NavbarComponent {
 
+  constructor(private router: Router, private redirectService: RedirectService) {}
+  
   menuItems = signal<MenuItem[]>(initialMenuItems);
+
+  setRedirectUrl(){
+    const currentUrl = this.router.url;
+    this.redirectService.setRedirectUrl(currentUrl);
+  }
   
   menuBarTokens = {
     background: 'none',
